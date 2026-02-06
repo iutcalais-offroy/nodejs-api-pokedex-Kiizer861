@@ -16,6 +16,7 @@ app.use(
 );
 
 app.use(express.json());
+app.use("/api", authRoutes);
 app.use("/api/auth", authRoutes);
 
 // Serve static files (Socket.io test client)
