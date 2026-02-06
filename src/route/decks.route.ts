@@ -7,7 +7,7 @@ const router = Router();
 
 router.post("/sign-up", authController.signUp);
 router.post("/sign-in", authController.signIn);
-
+router.get("/cards", authController.getAllCards);
 
 router.get("/profile", authMiddleware, authController.getProfile);
 
