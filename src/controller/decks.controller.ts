@@ -33,7 +33,7 @@ export const authController = {
     res.json({ user: req.user });
   },
 
-  async getAllCards(req: Request, res: Response) {
+  async getAllCards(_req: Request, res: Response) {
     try {
       const cards = await cardService.getAllCards();
       return res.status(200).json(cards);
