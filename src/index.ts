@@ -4,7 +4,6 @@ import express from 'express'
 import cors from 'cors'
 import authRoutes from './route/decks.route'
 
-
 // Create Express app
 export const app = express()
 

@@ -27,7 +27,6 @@
     "test:coverage": "vitest --coverage",
     "check": "npm run lint && npm run format:check && npm run ts:check && npm run test",
     "typecheck": "tsc --noEmit"
-    
   },
   "dependencies": {
     "@prisma/adapter-pg": "7.1.0",
