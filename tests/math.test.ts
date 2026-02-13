@@ -1,2 +1,2 @@
-import {it} from 'vitest'
+import { it } from 'vitest'
 it('vide', () => {})
