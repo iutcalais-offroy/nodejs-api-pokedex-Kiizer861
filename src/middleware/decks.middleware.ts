@@ -22,7 +22,7 @@ export const authMiddleware = (
     }
 
     req.user = {
-      userId: decoded.userId,
+      id: decoded.userId,   
       email: decoded.email,
     }
 

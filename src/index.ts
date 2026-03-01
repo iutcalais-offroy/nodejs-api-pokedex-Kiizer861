@@ -16,32 +16,24 @@ app.use(
 )
 
 app.use(express.json())
-app.use('/api', authRoutes)
-app.use('/api/auth', authRoutes)
 
-// Serve static files (Socket.io test client)
-app.use(express.static('public'))
+// Monte le routeur avec un seul préfixe
+app.use('/api', authRoutes)
 
 // Health check endpoint
 app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok', message: 'TCG Backend Server is running' })
 })
 
-// Start server only if this file is run directly (not imported for tests)
-if (require.main === module) {
-  // Create HTTP server
-  const httpServer = createServer(app)
+// Serve static files (facultatif)
+app.use(express.static('public'))
 
-  // Start server
-  try {
-    httpServer.listen(env.PORT, () => {
-      console.log(`\n🚀 Server is running on http://localhost:${env.PORT}`)
-      console.log(
-        `🧪 Socket.io Test Client available at http://localhost:${env.PORT}`,
-      )
-    })
-  } catch (error) {
-    console.error('Failed to start server:', error)
-    process.exit(1)
-  }
-}
+// Démarrage du serveur
+const httpServer = createServer(app)
+
+httpServer.listen(env.PORT, () => {
+  console.log(`\n🚀 Server is running on http://localhost:${env.PORT}`)
+  console.log(
+    `🧪 Socket.io Test Client available at http://localhost:${env.PORT}`,
+  )
+})
