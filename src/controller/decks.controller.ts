@@ -13,7 +13,8 @@ export const authController = {
       const result = await authService.signUp(email, username, password)
       return res.status(201).json(result)
     } catch (error: unknown) {
-      if (error instanceof Error) return res.status(500).json({ message: error.message })
+      if (error instanceof Error)
+        return res.status(500).json({ message: error.message })
       return res.status(500).json({ message: 'Server error' })
     }
   },
@@ -21,12 +22,14 @@ export const authController = {
   async signIn(req: Request, res: Response) {
     try {
       const { email, password } = req.body
-      if (!email || !password) return res.status(400).json({ message: 'Missing fields' })
+      if (!email || !password)
+        return res.status(400).json({ message: 'Missing fields' })
 
       const result = await authService.signIn(email, password)
       return res.status(200).json(result)
     } catch (error: unknown) {
-      if (error instanceof Error) return res.status(500).json({ message: error.message })
+      if (error instanceof Error)
+        return res.status(500).json({ message: error.message })
       return res.status(500).json({ message: 'Server error' })
     }
   },
@@ -39,7 +42,8 @@ export const authController = {
       const user = await authService.getProfile(userId)
       return res.status(200).json({ user })
     } catch (error: unknown) {
-      if (error instanceof Error) return res.status(500).json({ message: error.message })
+      if (error instanceof Error)
+        return res.status(500).json({ message: error.message })
       return res.status(500).json({ message: 'Server error' })
     }
   },
@@ -50,7 +54,8 @@ export const authController = {
       const cards = await cardService.getAllCards()
       return res.status(200).json(cards)
     } catch (error: unknown) {
-      if (error instanceof Error) return res.status(500).json({ message: error.message })
+      if (error instanceof Error)
+        return res.status(500).json({ message: error.message })
       return res.status(500).json({ message: 'Server error' })
     }
   },
@@ -61,19 +66,27 @@ export const authController = {
       const userId = req.user?.id
       const { name, cardIds } = req.body
       if (!userId) return res.status(401).json({ message: 'Unauthorized' })
-      if (!name) return res.status(400).json({ message: 'Deck name is required' })
+      if (!name)
+        return res.status(400).json({ message: 'Deck name is required' })
       if (!Array.isArray(cardIds) || cardIds.length !== 10)
-        return res.status(400).json({ message: 'Deck must contain exactly 10 cards' })
+        return res
+          .status(400)
+          .json({ message: 'Deck must contain exactly 10 cards' })
 
       const allCards = await cardService.getAllCards()
-      const invalidIds = cardIds.filter((id: number) => !allCards.find((c) => c.id === id))
+      const invalidIds = cardIds.filter(
+        (id: number) => !allCards.find((c) => c.id === id),
+      )
       if (invalidIds.length > 0)
-        return res.status(400).json({ message: 'Some card IDs are invalid', invalidIds })
+        return res
+          .status(400)
+          .json({ message: 'Some card IDs are invalid', invalidIds })
 
       const deck = await deckService.create({ name, cardIds }, userId)
       return res.status(201).json(deck)
     } catch (error: unknown) {
-      if (error instanceof Error) return res.status(500).json({ message: error.message })
+      if (error instanceof Error)
+        return res.status(500).json({ message: error.message })
       return res.status(500).json({ message: 'Server error' })
     }
   },
@@ -86,7 +99,8 @@ export const authController = {
       const decks = await deckService.getMine(userId)
       return res.status(200).json(decks)
     } catch (error: unknown) {
-      if (error instanceof Error) return res.status(500).json({ message: error.message })
+      if (error instanceof Error)
+        return res.status(500).json({ message: error.message })
       return res.status(500).json({ message: 'Server error' })
     }
   },
@@ -98,11 +112,13 @@ export const authController = {
       if (!userId) return res.status(401).json({ message: 'Unauthorized' })
 
       const deck = await deckService.getOne(deckId, userId)
-      if (!deck) return res.status(404).json({ message: 'Deck not found or not yours' })
+      if (!deck)
+        return res.status(404).json({ message: 'Deck not found or not yours' })
 
       return res.status(200).json(deck)
     } catch (error: unknown) {
-      if (error instanceof Error) return res.status(500).json({ message: error.message })
+      if (error instanceof Error)
+        return res.status(500).json({ message: error.message })
       return res.status(500).json({ message: 'Server error' })
     }
   },
@@ -114,23 +130,32 @@ export const authController = {
       const { name, cardIds } = req.body
       if (!userId) return res.status(401).json({ message: 'Unauthorized' })
 
-      if (!name && !cardIds) return res.status(400).json({ message: 'Nothing to update' })
+      if (!name && !cardIds)
+        return res.status(400).json({ message: 'Nothing to update' })
       if (cardIds && (!Array.isArray(cardIds) || cardIds.length !== 10))
-        return res.status(400).json({ message: 'Deck must contain exactly 10 cards' })
+        return res
+          .status(400)
+          .json({ message: 'Deck must contain exactly 10 cards' })
 
       if (cardIds) {
         const allCards = await cardService.getAllCards()
-        const invalidIds = cardIds.filter((id: number) => !allCards.find((c) => c.id === id))
+        const invalidIds = cardIds.filter(
+          (id: number) => !allCards.find((c) => c.id === id),
+        )
         if (invalidIds.length > 0)
-          return res.status(400).json({ message: 'Some card IDs are invalid', invalidIds })
+          return res
+            .status(400)
+            .json({ message: 'Some card IDs are invalid', invalidIds })
       }
 
       const deck = await deckService.update(deckId, { name, cardIds }, userId)
-      if (!deck) return res.status(404).json({ message: 'Deck not found or not yours' })
+      if (!deck)
+        return res.status(404).json({ message: 'Deck not found or not yours' })
 
       return res.status(200).json(deck)
     } catch (error: unknown) {
-      if (error instanceof Error) return res.status(500).json({ message: error.message })
+      if (error instanceof Error)
+        return res.status(500).json({ message: error.message })
       return res.status(500).json({ message: 'Server error' })
     }
   },
@@ -142,11 +167,13 @@ export const authController = {
       if (!userId) return res.status(401).json({ message: 'Unauthorized' })
 
       const deck = await deckService.delete(deckId, userId)
-      if (!deck) return res.status(404).json({ message: 'Deck not found or not yours' })
+      if (!deck)
+        return res.status(404).json({ message: 'Deck not found or not yours' })
 
       return res.status(200).json({ message: 'Deck deleted successfully' })
     } catch (error: unknown) {
-      if (error instanceof Error) return res.status(500).json({ message: error.message })
+      if (error instanceof Error)
+        return res.status(500).json({ message: error.message })
       return res.status(500).json({ message: 'Server error' })
     }
   },

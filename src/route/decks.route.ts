@@ -14,10 +14,10 @@ router.get('/cards', authController.getAllCards)
 
 /* -------------------- DECKS -------------------- */
 // Toutes ces routes utilisent authMiddleware
-router.post('/decks', authMiddleware, authController.create)        // POST /api/decks
-router.get('/decks/mine', authMiddleware, authController.getMine)   // GET /api/decks/mine
-router.get('/decks/:id', authMiddleware, authController.getOne)     // GET /api/decks/:id
-router.patch('/decks/:id', authMiddleware, authController.update)   // PATCH /api/decks/:id
-router.delete('/decks/:id', authMiddleware, authController.delete)  // DELETE /api/decks/:id
+router.post('/decks', authMiddleware, authController.create) // POST /api/decks
+router.get('/decks/mine', authMiddleware, authController.getMine) // GET /api/decks/mine
+router.get('/decks/:id', authMiddleware, authController.getOne) // GET /api/decks/:id
+router.patch('/decks/:id', authMiddleware, authController.update) // PATCH /api/decks/:id
+router.delete('/decks/:id', authMiddleware, authController.delete) // DELETE /api/decks/:id
 
 export default router

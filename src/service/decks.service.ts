@@ -31,7 +31,11 @@ export const authService = {
 
     return {
       token,
-      user: { id: newUser.id, email: newUser.email, username: newUser.username },
+      user: {
+        id: newUser.id,
+        email: newUser.email,
+        username: newUser.username,
+      },
     }
   },
 
@@ -75,10 +79,7 @@ export const cardService = {
 
 /* ---------------------- DECK SERVICE ---------------------- */
 export const deckService = {
-  async create(
-    data: { name: string; cardIds: number[] },
-    userId: number
-  ) {
+  async create(data: { name: string; cardIds: number[] }, userId: number) {
     return prisma.deck.create({
       data: {
         name: data.name,
@@ -110,7 +111,7 @@ export const deckService = {
   async update(
     deckId: number,
     data: { name?: string; cardIds?: number[] },
-    userId: number
+    userId: number,
   ) {
     const deck = await prisma.deck.findFirst({ where: { id: deckId, userId } })
     if (!deck) throw new HttpError('Deck not found', 404)
