@@ -73,7 +73,7 @@ model DeckCard {
   deckId Int
   cardId Int
 
-  deck   Deck @relation(fields: [deckId], references: [id])
+  deck   Deck @relation(fields: [deckId], references: [id], onDelete: Cascade)
   card   Card @relation(fields: [cardId], references: [id])
 
   @@unique([deckId, cardId])
